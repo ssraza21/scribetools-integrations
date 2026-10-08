@@ -1,0 +1,2009 @@
+{
+  "components": {
+    "schemas": {
+      "Account": {
+        "properties": {
+          "auth_method": {
+            "description": "How this request authenticated: session, api_key or oauth.",
+            "title": "Auth Method",
+            "type": "string"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The account's sign-in email, for labelling connections.",
+            "title": "Email"
+          },
+          "pages": {
+            "$ref": "#/components/schemas/AccountPages"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "tier_key": {
+            "title": "Tier Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan",
+          "tier_key",
+          "pages",
+          "auth_method"
+        ],
+        "title": "Account",
+        "type": "object"
+      },
+      "AccountPages": {
+        "properties": {
+          "available": {
+            "description": "Pages you can spend now.",
+            "title": "Available",
+            "type": "integer"
+          },
+          "balance": {
+            "title": "Balance",
+            "type": "integer"
+          },
+          "reserved": {
+            "description": "Pages held by running jobs.",
+            "title": "Reserved",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "available",
+          "reserved",
+          "balance"
+        ],
+        "title": "AccountPages",
+        "type": "object"
+      },
+      "CreateOutcomeJobRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "callback_url": {
+            "anyOf": [
+              {
+                "maxLength": 2048,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Public https URL to POST to once when the job finishes (completed, partial, failed or cancelled). Signed with callback_secret; carries ids and state only.",
+            "title": "Callback Url"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Result format; one of the outcome's formats. Defaults to its default_format.",
+            "title": "Format"
+          },
+          "gcs_uris": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 50,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "gs:// URIs returned by POST /api/v1/upload-urls. Send this or sources, not both.",
+            "title": "Gcs Uris"
+          },
+          "idempotency_key": {
+            "description": "Client-generated id for this submission. Retrying with the same key and request returns the same job; the same key with a different request is a 409.",
+            "format": "uuid",
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "options": {
+            "description": "Outcome options; see the outcome's options_schema.",
+            "title": "Options",
+            "type": "object"
+          },
+          "outcome": {
+            "description": "An id from GET /api/v1/outcomes.",
+            "title": "Outcome",
+            "type": "string"
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SourceURL"
+                },
+                "maxItems": 50,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Files to fetch from public https URLs instead of uploading them. Send this or gcs_uris.",
+            "title": "Sources"
+          }
+        },
+        "required": [
+          "outcome",
+          "idempotency_key"
+        ],
+        "title": "CreateOutcomeJobRequest",
+        "type": "object"
+      },
+      "ErrorDetail": {
+        "additionalProperties": true,
+        "description": "Machine-readable error. Extra fields depend on ``code``.",
+        "properties": {
+          "code": {
+            "description": "Stable identifier, e.g. 'insufficient_credits'.",
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "description": "Human-readable explanation.",
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorDetail",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "detail": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        },
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "OutcomeCatalog": {
+        "properties": {
+          "outcomes": {
+            "description": "Outcomes available to the caller's plan. A fixed, small list.",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeSummary"
+            },
+            "title": "Outcomes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "outcomes"
+        ],
+        "title": "OutcomeCatalog",
+        "type": "object"
+      },
+      "OutcomeJobCreated": {
+        "properties": {
+          "callback_secret": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only with callback_url: verify each callback's ScribeTools-Signature header (t=<unix>,v1=<hex HMAC-SHA256 of '<t>.' + body>) with this secret.",
+            "title": "Callback Secret"
+          },
+          "created": {
+            "description": "False when an earlier request with this idempotency key made the job.",
+            "title": "Created",
+            "type": "boolean"
+          },
+          "credits_reserved": {
+            "description": "Credits held for this job; charged only for work that completes.",
+            "title": "Credits Reserved",
+            "type": "integer"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "created",
+          "state",
+          "outcome",
+          "format",
+          "credits_reserved"
+        ],
+        "title": "OutcomeJobCreated",
+        "type": "object"
+      },
+      "OutcomeJobError": {
+        "properties": {
+          "item_id": {
+            "title": "Item Id",
+            "type": "integer"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_id",
+          "message"
+        ],
+        "title": "OutcomeJobError",
+        "type": "object"
+      },
+      "OutcomeJobItem": {
+        "properties": {
+          "credits_charged": {
+            "title": "Credits Charged",
+            "type": "integer"
+          },
+          "credits_reserved": {
+            "title": "Credits Reserved",
+            "type": "integer"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "item_id": {
+            "title": "Item Id",
+            "type": "integer"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_id",
+          "filename",
+          "state",
+          "credits_reserved",
+          "credits_charged"
+        ],
+        "title": "OutcomeJobItem",
+        "type": "object"
+      },
+      "OutcomeJobList": {
+        "properties": {
+          "jobs": {
+            "items": {
+              "$ref": "#/components/schemas/OutcomeJobSummary"
+            },
+            "title": "Jobs",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "jobs",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "OutcomeJobList",
+        "type": "object"
+      },
+      "OutcomeJobProgress": {
+        "properties": {
+          "cancelled": {
+            "title": "Cancelled",
+            "type": "integer"
+          },
+          "completed": {
+            "title": "Completed",
+            "type": "integer"
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "integer"
+          },
+          "processing": {
+            "title": "Processing",
+            "type": "integer"
+          },
+          "queued": {
+            "title": "Queued",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "queued",
+          "processing",
+          "completed",
+          "failed",
+          "cancelled"
+        ],
+        "title": "OutcomeJobProgress",
+        "type": "object"
+      },
+      "OutcomeJobResult": {
+        "properties": {
+          "filename": {
+            "description": "Suggested local filename.",
+            "title": "Filename",
+            "type": "string"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "item_id": {
+            "title": "Item Id",
+            "type": "integer"
+          },
+          "kind": {
+            "description": "'file': stored as produced. 'export': rendered from the job's structured output on first download.",
+            "title": "Kind",
+            "type": "string"
+          },
+          "media_type": {
+            "title": "Media Type",
+            "type": "string"
+          },
+          "result_id": {
+            "description": "Pass to the download endpoint.",
+            "title": "Result Id",
+            "type": "string"
+          },
+          "size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Unknown for an export until its first download.",
+            "title": "Size Bytes"
+          },
+          "source_filename": {
+            "description": "The input file this result came from.",
+            "title": "Source Filename",
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_id",
+          "item_id",
+          "source_filename",
+          "format",
+          "kind",
+          "filename",
+          "media_type"
+        ],
+        "title": "OutcomeJobResult",
+        "type": "object"
+      },
+      "OutcomeJobResults": {
+        "properties": {
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "pending_items": {
+            "description": "Files still queued or processing.",
+            "title": "Pending Items",
+            "type": "integer"
+          },
+          "results": {
+            "description": "One per completed file, in submission order.",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeJobResult"
+            },
+            "title": "Results",
+            "type": "array"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "terminal": {
+            "title": "Terminal",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "job_id",
+          "state",
+          "terminal",
+          "results",
+          "pending_items"
+        ],
+        "title": "OutcomeJobResults",
+        "type": "object"
+      },
+      "OutcomeJobStatus": {
+        "properties": {
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "credits_charged": {
+            "title": "Credits Charged",
+            "type": "integer"
+          },
+          "credits_reserved": {
+            "description": "Credits still held for unfinished items.",
+            "title": "Credits Reserved",
+            "type": "integer"
+          },
+          "errors": {
+            "description": "Up to 20 item errors.",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeJobError"
+            },
+            "title": "Errors",
+            "type": "array"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/OutcomeJobItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "progress": {
+            "$ref": "#/components/schemas/OutcomeJobProgress"
+          },
+          "state": {
+            "description": "queued, processing, completed, partial, failed, or cancelled.",
+            "title": "State",
+            "type": "string"
+          },
+          "terminal": {
+            "title": "Terminal",
+            "type": "boolean"
+          },
+          "total_error_count": {
+            "title": "Total Error Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "job_id",
+          "outcome",
+          "format",
+          "state",
+          "terminal",
+          "progress",
+          "items",
+          "credits_reserved",
+          "credits_charged",
+          "errors",
+          "total_error_count"
+        ],
+        "title": "OutcomeJobStatus",
+        "type": "object"
+      },
+      "OutcomeJobSummary": {
+        "properties": {
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "state": {
+            "description": "completed, partial, failed, or cancelled; every unfinished job is listed as processing. GET /api/v1/outcome-jobs/{id} distinguishes queued from processing.",
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "outcome",
+          "format",
+          "state"
+        ],
+        "title": "OutcomeJobSummary",
+        "type": "object"
+      },
+      "OutcomeSummary": {
+        "properties": {
+          "accepted_mime_types": {
+            "description": "Input file types this outcome accepts.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Accepted Mime Types",
+            "type": "array"
+          },
+          "credits_per_page": {
+            "description": "Credits per input page with default options. Each file's total is rounded up; some options (EPUB embed_pdf_pages) raise it.",
+            "title": "Credits Per Page",
+            "type": "number"
+          },
+          "default_format": {
+            "description": "Result format used when none is requested.",
+            "title": "Default Format",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "formats": {
+            "description": "Result formats this outcome can produce.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Formats",
+            "type": "array"
+          },
+          "id": {
+            "description": "Pass this as `outcome` when creating a job.",
+            "title": "Id",
+            "type": "string"
+          },
+          "options_schema": {
+            "description": "JSON Schema of `options` for this outcome, exactly as enforced.",
+            "title": "Options Schema",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "description",
+          "accepted_mime_types",
+          "default_format",
+          "formats",
+          "credits_per_page",
+          "options_schema"
+        ],
+        "title": "OutcomeSummary",
+        "type": "object"
+      },
+      "ResultContent": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The parsed result, for JSON results.",
+            "title": "Data"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "media_type": {
+            "title": "Media Type",
+            "type": "string"
+          },
+          "result_id": {
+            "title": "Result Id",
+            "type": "string"
+          },
+          "size_bytes": {
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The result's text, for TXT results.",
+            "title": "Text"
+          }
+        },
+        "required": [
+          "result_id",
+          "format",
+          "media_type",
+          "size_bytes"
+        ],
+        "title": "ResultContent",
+        "type": "object"
+      },
+      "ResultDownload": {
+        "properties": {
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "format": {
+            "title": "Format",
+            "type": "string"
+          },
+          "media_type": {
+            "title": "Media Type",
+            "type": "string"
+          },
+          "result_id": {
+            "title": "Result Id",
+            "type": "string"
+          },
+          "size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size Bytes"
+          },
+          "url": {
+            "description": "Short-lived signed URL. GET it without an Authorization header.",
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "result_id",
+          "filename",
+          "format",
+          "media_type",
+          "url",
+          "expires_at"
+        ],
+        "title": "ResultDownload",
+        "type": "object"
+      },
+      "SourceURL": {
+        "additionalProperties": false,
+        "properties": {
+          "filename": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Name to give the file. Defaults to the server's filename or the URL's last path segment.",
+            "title": "Filename"
+          },
+          "url": {
+            "description": "Public https URL of a PDF or image. Fetched once, when the job is created.",
+            "maxLength": 2048,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "SourceURL",
+        "type": "object"
+      },
+      "UploadFileInfo": {
+        "properties": {
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "maximum": 2000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          },
+          "size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size Bytes"
+          }
+        },
+        "required": [
+          "id",
+          "filename"
+        ],
+        "title": "UploadFileInfo",
+        "type": "object"
+      },
+      "UploadUrlInfo": {
+        "properties": {
+          "file_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Id"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "gcs_uri": {
+            "title": "Gcs Uri",
+            "type": "string"
+          },
+          "headers": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headers"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "mime_type": {
+            "title": "Mime Type",
+            "type": "string"
+          },
+          "signed_url": {
+            "title": "Signed Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "filename",
+          "signed_url",
+          "gcs_uri",
+          "mime_type"
+        ],
+        "title": "UploadUrlInfo",
+        "type": "object"
+      },
+      "UploadUrlsRequest": {
+        "properties": {
+          "file_infos": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/UploadFileInfo"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Per-file upload metadata. Preferred over files/file_pages because it is stable when multiple files have the same filename.",
+            "title": "File Infos"
+          },
+          "file_pages": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "maximum": 2000.0,
+                  "minimum": 1.0,
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Map of filename to page count",
+            "title": "File Pages"
+          },
+          "file_sizes": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Map of filename to file size in bytes",
+            "title": "File Sizes"
+          },
+          "files": {
+            "description": "List of filenames to upload",
+            "items": {
+              "type": "string"
+            },
+            "title": "Files",
+            "type": "array"
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Client-generated submission id. Reusing it returns stable upload paths and allows job creation to collapse request replays.",
+            "title": "Idempotency Key"
+          }
+        },
+        "title": "UploadUrlsRequest",
+        "type": "object"
+      },
+      "UploadUrlsResponse": {
+        "properties": {
+          "batch_id": {
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "urls": {
+            "items": {
+              "$ref": "#/components/schemas/UploadUrlInfo"
+            },
+            "title": "Urls",
+            "type": "array"
+          }
+        },
+        "required": [
+          "urls",
+          "batch_id"
+        ],
+        "title": "UploadUrlsResponse",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "ScribeTools public API",
+    "version": "1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/me": {
+      "get": {
+        "description": "Who this credential belongs to, its plan and pages (plan 017).\n\nIntegrations use it to test a connection and label it.",
+        "operationId": "get_account_api_v1_me_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Get Account"
+      }
+    },
+    "/api/v1/outcome-jobs": {
+      "get": {
+        "description": "Your jobs, newest first.",
+        "operationId": "list_outcome_jobs_api_v1_outcome_jobs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "List Outcome Jobs"
+      },
+      "post": {
+        "description": "Create a job by outcome name. The server builds the pipeline.",
+        "operationId": "create_outcome_job_api_v1_outcome_jobs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOutcomeJobRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobCreated"
+                }
+              }
+            },
+            "description": "Replay of an earlier request"
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobCreated"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Insufficient credits"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not allowed for this caller or plan"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Create Outcome Job"
+      }
+    },
+    "/api/v1/outcome-jobs/{job_id}": {
+      "get": {
+        "description": "Compact status. While not terminal, Retry-After says when to poll again.",
+        "operationId": "get_outcome_job_api_v1_outcome_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Get Outcome Job"
+      }
+    },
+    "/api/v1/outcome-jobs/{job_id}/cancel": {
+      "post": {
+        "description": "Cancel a running job. Completed steps' output stays and is charged;\nunused holds are released. Cancelling a finished job changes nothing.",
+        "operationId": "cancel_outcome_job_api_v1_outcome_jobs__job_id__cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Cancel Outcome Job"
+      }
+    },
+    "/api/v1/outcome-jobs/{job_id}/results": {
+      "get": {
+        "description": "One result per completed file. Listing never renders or charges.",
+        "operationId": "list_outcome_job_results_api_v1_outcome_jobs__job_id__results_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeJobResults"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "List Outcome Job Results"
+      }
+    },
+    "/api/v1/outcome-jobs/{job_id}/results/{result_id}/content": {
+      "get": {
+        "description": "A TXT or JSON result's content, up to 1 MiB (plan 017).\n\nFor automation steps that map extracted text or fields directly. Other\nformats and larger results are download-only.",
+        "operationId": "read_outcome_job_result_content_api_v1_outcome_jobs__job_id__results__result_id__content_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "result_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Result Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultContent"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too large to return inline"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Read Outcome Job Result Content"
+      }
+    },
+    "/api/v1/outcome-jobs/{job_id}/results/{result_id}/download": {
+      "get": {
+        "description": "A short-lived signed URL for one result.\n\nDOCX/XLSX/CSV are rendered on the first download and reused after that;\non plans with a free-export allowance the first download of each such\nresult uses one export.",
+        "operationId": "download_outcome_job_result_api_v1_outcome_jobs__job_id__results__result_id__download_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "result_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Result Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResultDownload"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Insufficient credits"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found (or not yours)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Download Outcome Job Result"
+      }
+    },
+    "/api/v1/outcomes": {
+      "get": {
+        "operationId": "list_outcomes_api_v1_outcomes_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeCatalog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "List Outcomes",
+        "tags": [
+          "outcomes"
+        ]
+      }
+    },
+    "/api/v1/upload-urls": {
+      "post": {
+        "description": "Generate signed URLs for direct GCS uploads. Session or API key.",
+        "operationId": "get_upload_urls_api_v1_upload_urls_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadUrlsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadUrlsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Missing, invalid, or revoked credentials"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not allowed for this caller or plan"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Rate limited; see Retry-After"
+          }
+        },
+        "summary": "Get Upload Urls"
+      }
+    }
+  }
+}

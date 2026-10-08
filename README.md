@@ -18,6 +18,8 @@ usage can be counted by channel.
 
 ## API used
 
+Full reference: [API.md](API.md) (machine-readable: [openapi.json](openapi.json)).
+
 - `GET /me`: test a connection and label it.
 - `POST /upload-urls`, then `PUT` to the signed URL: upload a file (n8n, Make).
 - `POST /outcome-jobs` with `sources: [{url}]`: let ScribeTools fetch a public file (Zapier).
