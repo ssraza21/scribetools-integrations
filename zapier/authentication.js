@@ -15,5 +15,5 @@ module.exports = {
     },
   ],
   test: { url: `${API_BASE}/api/v1/me`, method: 'GET' },
-  connectionLabel: '{{json.email}}',
+  connectionLabel: '{{bundle.inputData.email}}',
 };
