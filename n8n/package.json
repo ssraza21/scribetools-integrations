@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-scribetools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n nodes for ScribeTools: OCR, editable Word, tables, translation and custom data extraction for Arabic-script and multilingual documents.",
   "keywords": [
     "n8n-community-node-package",
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/ssraza21/scribetools-integrations/tree/main/n8n",
   "author": {
     "name": "ScribeTools",
-    "email": "support@scribetools.com"
+    "email": "contact@scribetools.com"
   },
   "repository": {
     "type": "git",

@@ -1,7 +1,7 @@
 // Pure helpers shared by the ScribeTools nodes. No n8n imports, so they can be
 // unit-tested without an n8n runtime.
 
-export const CLIENT_HEADER = 'n8n/0.1.0';
+export const CLIENT_HEADER = 'n8n/0.1.1';
 
 export const TERMINAL_STATES = ['completed', 'partial', 'failed', 'cancelled'];
 
