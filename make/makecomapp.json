@@ -131,7 +131,8 @@
                     "communication": "modules/watchFinishedJobs/api.iml.json",
                     "mappableParams": "modules/watchFinishedJobs/parameters.iml.json",
                     "interface": "modules/watchFinishedJobs/interface.iml.json",
-                    "samples": "modules/watchFinishedJobs/samples.iml.json"
+                    "samples": "modules/watchFinishedJobs/samples.iml.json",
+                    "staticParams": "modules/watchFinishedJobs/static-params.iml.json"
                 }
             },
             "getAccount": {
@@ -161,20 +162,72 @@
             }
         },
         "webhook": {},
-        "function": {
-            "outcomeOptions": {
-                "codeFiles": {
-                    "code": "functions/outcomeOptions/code.js",
-                    "test": "functions/outcomeOptions/test.js"
-                }
-            },
-            "extractionSchema": {
-                "codeFiles": {
-                    "code": "functions/extractionSchema/code.js",
-                    "test": "functions/extractionSchema/test.js"
-                }
-            }
-        }
+        "function": {}
     },
-    "origins": []
+    "origins": [
+        {
+            "label": "Make US2 (ScribeTools)",
+            "baseUrl": "https://us2.make.com/api",
+            "appId": "scribe-tools-78b7f5",
+            "appVersion": 1,
+            "idMapping": {
+                "connection": [
+                    {
+                        "local": "scribetools",
+                        "remote": "scribe-tools-78b7f5"
+                    }
+                ],
+                "webhook": [],
+                "rpc": [],
+                "function": [],
+                "module": [
+                    {
+                        "local": "processDocument",
+                        "remote": "processDocument"
+                    },
+                    {
+                        "local": "extractCustomData",
+                        "remote": "extractCustomData"
+                    },
+                    {
+                        "local": "getJob",
+                        "remote": "getJob"
+                    },
+                    {
+                        "local": "cancelJob",
+                        "remote": "cancelJob"
+                    },
+                    {
+                        "local": "listJobs",
+                        "remote": "listJobs"
+                    },
+                    {
+                        "local": "listResults",
+                        "remote": "listResults"
+                    },
+                    {
+                        "local": "getResultContent",
+                        "remote": "getResultContent"
+                    },
+                    {
+                        "local": "downloadResult",
+                        "remote": "downloadResult"
+                    },
+                    {
+                        "local": "watchFinishedJobs",
+                        "remote": "watchFinishedJobs"
+                    },
+                    {
+                        "local": "getAccount",
+                        "remote": "getAccount"
+                    },
+                    {
+                        "local": "makeApiCall",
+                        "remote": "makeApiCall"
+                    }
+                ]
+            },
+            "apikeyFile": ".secrets/apikey"
+        }
+    ]
 }

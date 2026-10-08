@@ -48,7 +48,8 @@
             ],
             "idempotency_key": "{{temp.key}}",
             "options": {
-                "output_schema": "{{extractionSchema(parameters.fields, parameters.schemaJson)}}",
+                "fields": "{{if(parameters.schemaJson, undefined, parameters.fields)}}",
+                "output_schema": "{{if(parameters.schemaJson, parameters.schemaJson, undefined)}}",
                 "extraction_granularity": "{{ifempty(parameters.granularity, 'document')}}"
             },
             "name": "{{ifempty(parameters.jobName, undefined)}}",

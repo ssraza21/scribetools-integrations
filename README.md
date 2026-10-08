@@ -30,7 +30,6 @@ usage can be counted by channel.
 
 ```bash
 node --test tests/n8n-helpers.test.ts      # n8n helpers
-node tests/make-functions.test.js          # Make custom IML functions
 (cd zapier && npm ci && npm test && npx zapier-platform validate)
 (cd n8n && npm ci --ignore-scripts && npx n8n-node lint && npx n8n-node build)
 ```

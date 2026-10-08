@@ -47,7 +47,11 @@
                 "{{temp.upload.gcs_uri}}"
             ],
             "idempotency_key": "{{temp.key}}",
-            "options": "{{outcomeOptions(parameters.outcome, parameters.language, parameters.targetLanguage, parameters.translationInstructions)}}",
+            "options": {
+                "language": "{{ifempty(parameters.language, 'auto')}}",
+                "target_language": "{{if(parameters.outcome = 'translation', ifempty(parameters.targetLanguage, 'eng'), undefined)}}",
+                "translation_instructions": "{{if(parameters.outcome = 'translation', ifempty(parameters.translationInstructions, undefined), undefined)}}"
+            },
             "name": "{{ifempty(parameters.jobName, undefined)}}",
             "callback_url": "{{ifempty(parameters.callbackUrl, undefined)}}",
             "format": "{{ifempty(parameters.format, undefined)}}"
