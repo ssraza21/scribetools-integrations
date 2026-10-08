@@ -30,8 +30,9 @@ jobs:
       - run: npm ci --ignore-scripts
       - name: Tag matches package version
         run: test "n8n-v$(node -p "require('./package.json').version")" = "${GITHUB_REF_NAME}"
-      - run: npx n8n-node lint
-      - run: npx n8n-node build
-      - run: npm publish --provenance --access public
+      # n8n-node's release command lints, builds and runs `npm publish` with
+      # RELEASE_MODE and provenance (a bare `npm publish` is blocked by prepublishOnly).
+      - run: npm run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_ACCESS: public
