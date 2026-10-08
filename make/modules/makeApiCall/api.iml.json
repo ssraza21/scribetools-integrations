@@ -1,5 +1,5 @@
 {
-    "url": "{{if(startsWith(parameters.url, '/'), parameters.url, '/' + parameters.url)}}",
+    "url": "{{parameters.url}}",
     "method": "{{parameters.method}}",
     "headers": {
         "authorization": "Bearer {{connection.apiKey}}",

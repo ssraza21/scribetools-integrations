@@ -4,7 +4,7 @@
         "type": "text",
         "label": "URL",
         "required": true,
-        "help": "Path relative to https://api.scribetools.com/api/v1, e.g. /outcome-jobs."
+        "help": "Path starting with a slash, relative to https://api.scribetools.com/api/v1, e.g. /outcome-jobs."
     },
     {
         "name": "method",
