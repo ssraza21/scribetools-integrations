@@ -1,0 +1,8 @@
+{
+    "job_id": "3f1c2a9e-5b7d-4e2a-9c1b-0d8e7f6a5b4c",
+    "created": true,
+    "state": "queued",
+    "outcome": "custom_data_extraction",
+    "format": "json",
+    "credits_reserved": 2
+}

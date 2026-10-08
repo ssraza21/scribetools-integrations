@@ -1,0 +1,56 @@
+{
+  "name": "n8n-nodes-scribetools",
+  "version": "0.1.0",
+  "description": "n8n nodes for ScribeTools: OCR, editable Word, tables, translation and custom data extraction for Arabic-script and multilingual documents.",
+  "keywords": [
+    "n8n-community-node-package",
+    "ocr",
+    "arabic",
+    "pdf",
+    "document-extraction",
+    "translation"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ssraza21/scribetools-integrations/tree/main/n8n",
+  "author": {
+    "name": "ScribeTools",
+    "email": "support@scribetools.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssraza21/scribetools-integrations.git",
+    "directory": "n8n"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "prepublishOnly": "n8n-node prerelease",
+    "release": "n8n-node release"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/ScribeToolsApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/ScribeTools/ScribeTools.node.js",
+      "dist/nodes/ScribeTools/ScribeToolsTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.51.3",
+    "eslint": "^9.29.0",
+    "n8n-workflow": "^2.16.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

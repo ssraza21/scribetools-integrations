@@ -1,0 +1,10 @@
+[
+    {
+        "name": "apiKey",
+        "type": "password",
+        "label": "API Key",
+        "required": true,
+        "editable": true,
+        "help": "Create an API key in ScribeTools under Settings → API keys (paid accounts)."
+    }
+]

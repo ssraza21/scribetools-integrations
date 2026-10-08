@@ -1,0 +1,356 @@
+[
+    {
+        "name": "fileName",
+        "type": "filename",
+        "label": "File name",
+        "required": true,
+        "semantic": "file:name"
+    },
+    {
+        "name": "data",
+        "type": "buffer",
+        "label": "Data",
+        "required": true,
+        "semantic": "file:data"
+    },
+    {
+        "name": "outcome",
+        "type": "select",
+        "label": "Outcome",
+        "required": true,
+        "default": "editable_document",
+        "options": [
+            {
+                "label": "Editable Word document",
+                "value": "editable_document"
+            },
+            {
+                "label": "Extract text",
+                "value": "extract_text"
+            },
+            {
+                "label": "Extract tables (Excel)",
+                "value": "table_extraction"
+            },
+            {
+                "label": "Translate document (Word)",
+                "value": "translation"
+            },
+            {
+                "label": "Searchable PDF",
+                "value": "searchable_pdf"
+            },
+            {
+                "label": "EPUB eBook",
+                "value": "epub"
+            }
+        ]
+    },
+    {
+        "name": "language",
+        "type": "select",
+        "label": "Document language",
+        "default": "auto",
+        "options": [
+            {
+                "label": "Detect automatically",
+                "value": "auto"
+            },
+            {
+                "label": "Arabic",
+                "value": "ara"
+            },
+            {
+                "label": "Urdu",
+                "value": "urd"
+            },
+            {
+                "label": "Persian",
+                "value": "fas"
+            },
+            {
+                "label": "English",
+                "value": "eng"
+            },
+            {
+                "label": "French",
+                "value": "fra"
+            },
+            {
+                "label": "Turkish",
+                "value": "tur"
+            },
+            {
+                "label": "Malay",
+                "value": "msa"
+            },
+            {
+                "label": "Indonesian",
+                "value": "ind"
+            },
+            {
+                "label": "Hindi",
+                "value": "hin"
+            },
+            {
+                "label": "Bengali",
+                "value": "ben"
+            },
+            {
+                "label": "Hebrew",
+                "value": "heb"
+            },
+            {
+                "label": "German",
+                "value": "deu"
+            },
+            {
+                "label": "Spanish",
+                "value": "spa"
+            },
+            {
+                "label": "Italian",
+                "value": "ita"
+            },
+            {
+                "label": "Portuguese",
+                "value": "por"
+            },
+            {
+                "label": "Dutch",
+                "value": "nld"
+            },
+            {
+                "label": "Russian",
+                "value": "rus"
+            },
+            {
+                "label": "Ukrainian",
+                "value": "ukr"
+            },
+            {
+                "label": "Polish",
+                "value": "pol"
+            },
+            {
+                "label": "Czech",
+                "value": "ces"
+            },
+            {
+                "label": "Swedish",
+                "value": "swe"
+            },
+            {
+                "label": "Norwegian",
+                "value": "nor"
+            },
+            {
+                "label": "Danish",
+                "value": "dan"
+            },
+            {
+                "label": "Finnish",
+                "value": "fin"
+            },
+            {
+                "label": "Greek",
+                "value": "ell"
+            },
+            {
+                "label": "Thai",
+                "value": "tha"
+            },
+            {
+                "label": "Vietnamese",
+                "value": "vie"
+            },
+            {
+                "label": "Japanese",
+                "value": "jpn"
+            },
+            {
+                "label": "Korean",
+                "value": "kor"
+            },
+            {
+                "label": "Chinese (Simplified)",
+                "value": "chi_sim"
+            },
+            {
+                "label": "Chinese (Traditional)",
+                "value": "chi_tra"
+            }
+        ]
+    },
+    {
+        "name": "targetLanguage",
+        "type": "select",
+        "label": "Translate into",
+        "default": "eng",
+        "options": [
+            {
+                "label": "Arabic",
+                "value": "ara"
+            },
+            {
+                "label": "Urdu",
+                "value": "urd"
+            },
+            {
+                "label": "Persian",
+                "value": "fas"
+            },
+            {
+                "label": "English",
+                "value": "eng"
+            },
+            {
+                "label": "French",
+                "value": "fra"
+            },
+            {
+                "label": "Turkish",
+                "value": "tur"
+            },
+            {
+                "label": "Malay",
+                "value": "msa"
+            },
+            {
+                "label": "Indonesian",
+                "value": "ind"
+            },
+            {
+                "label": "Hindi",
+                "value": "hin"
+            },
+            {
+                "label": "Bengali",
+                "value": "ben"
+            },
+            {
+                "label": "Hebrew",
+                "value": "heb"
+            },
+            {
+                "label": "German",
+                "value": "deu"
+            },
+            {
+                "label": "Spanish",
+                "value": "spa"
+            },
+            {
+                "label": "Italian",
+                "value": "ita"
+            },
+            {
+                "label": "Portuguese",
+                "value": "por"
+            },
+            {
+                "label": "Dutch",
+                "value": "nld"
+            },
+            {
+                "label": "Russian",
+                "value": "rus"
+            },
+            {
+                "label": "Ukrainian",
+                "value": "ukr"
+            },
+            {
+                "label": "Polish",
+                "value": "pol"
+            },
+            {
+                "label": "Czech",
+                "value": "ces"
+            },
+            {
+                "label": "Swedish",
+                "value": "swe"
+            },
+            {
+                "label": "Norwegian",
+                "value": "nor"
+            },
+            {
+                "label": "Danish",
+                "value": "dan"
+            },
+            {
+                "label": "Finnish",
+                "value": "fin"
+            },
+            {
+                "label": "Greek",
+                "value": "ell"
+            },
+            {
+                "label": "Thai",
+                "value": "tha"
+            },
+            {
+                "label": "Vietnamese",
+                "value": "vie"
+            },
+            {
+                "label": "Japanese",
+                "value": "jpn"
+            },
+            {
+                "label": "Korean",
+                "value": "kor"
+            },
+            {
+                "label": "Chinese (Simplified)",
+                "value": "chi_sim"
+            },
+            {
+                "label": "Chinese (Traditional)",
+                "value": "chi_tra"
+            }
+        ],
+        "help": "Used by Translate document only."
+    },
+    {
+        "name": "translationInstructions",
+        "type": "text",
+        "label": "Translation instructions",
+        "help": "Optional, for Translate document."
+    },
+    {
+        "name": "format",
+        "type": "select",
+        "label": "Result format",
+        "options": [
+            {
+                "label": "DOCX",
+                "value": "docx"
+            },
+            {
+                "label": "XLSX",
+                "value": "xlsx"
+            },
+            {
+                "label": "CSV (ZIP)",
+                "value": "csv"
+            }
+        ],
+        "help": "Leave empty for the outcome's default."
+    },
+    {
+        "name": "jobName",
+        "type": "text",
+        "label": "Job name",
+        "help": "Shown in your ScribeTools jobs."
+    },
+    {
+        "name": "callbackUrl",
+        "type": "url",
+        "label": "Callback URL",
+        "help": "Optional public https URL (for example a Make webhook) that ScribeTools calls once when the job finishes. Use it to continue a long job in another scenario."
+    }
+]

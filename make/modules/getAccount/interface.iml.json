@@ -1,0 +1,34 @@
+[
+    {
+        "name": "email",
+        "type": "email",
+        "label": "Email"
+    },
+    {
+        "name": "plan",
+        "type": "text",
+        "label": "Plan"
+    },
+    {
+        "name": "pages",
+        "type": "collection",
+        "label": "Pages",
+        "spec": [
+            {
+                "name": "available",
+                "type": "number",
+                "label": "Available"
+            },
+            {
+                "name": "reserved",
+                "type": "number",
+                "label": "Held by running jobs"
+            },
+            {
+                "name": "balance",
+                "type": "number",
+                "label": "Balance"
+            }
+        ]
+    }
+]

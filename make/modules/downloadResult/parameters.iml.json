@@ -1,0 +1,14 @@
+[
+    {
+        "name": "jobId",
+        "type": "text",
+        "label": "Job ID",
+        "required": true
+    },
+    {
+        "name": "resultId",
+        "type": "text",
+        "label": "Result ID",
+        "required": true
+    }
+]

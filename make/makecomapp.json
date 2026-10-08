@@ -1,0 +1,180 @@
+{
+    "fileVersion": 1,
+    "generalCodeFiles": {
+        "base": "general/base.iml.json",
+        "common": "general/common.json",
+        "readme": "README.md",
+        "groups": "general/groups.json"
+    },
+    "components": {
+        "connection": {
+            "scribetools": {
+                "label": "ScribeTools",
+                "connectionType": "basic",
+                "codeFiles": {
+                    "communication": "connections/scribetools/api.iml.json",
+                    "common": "connections/scribetools/common.json",
+                    "params": "connections/scribetools/parameters.iml.json"
+                }
+            }
+        },
+        "rpc": {},
+        "module": {
+            "processDocument": {
+                "label": "Process a Document",
+                "description": "Uploads a PDF or image and starts a job: editable Word, text, tables, translation, searchable PDF or EPUB. Use Watch Finished Jobs or a callback URL to get the result.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/processDocument/api.iml.json",
+                    "mappableParams": "modules/processDocument/parameters.iml.json",
+                    "interface": "modules/processDocument/interface.iml.json",
+                    "samples": "modules/processDocument/samples.iml.json"
+                },
+                "actionCrud": "create"
+            },
+            "extractCustomData": {
+                "label": "Extract Custom Data",
+                "description": "Pulls the fields you list out of a PDF or image as JSON with source-page evidence. Read the result with Get Result Content.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/extractCustomData/api.iml.json",
+                    "mappableParams": "modules/extractCustomData/parameters.iml.json",
+                    "interface": "modules/extractCustomData/interface.iml.json",
+                    "samples": "modules/extractCustomData/samples.iml.json"
+                },
+                "actionCrud": "create"
+            },
+            "getJob": {
+                "label": "Get a Job",
+                "description": "Gets a job's state, progress and pages charged.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/getJob/api.iml.json",
+                    "mappableParams": "modules/getJob/parameters.iml.json",
+                    "interface": "modules/getJob/interface.iml.json",
+                    "samples": "modules/getJob/samples.iml.json"
+                },
+                "actionCrud": "read"
+            },
+            "cancelJob": {
+                "label": "Cancel a Job",
+                "description": "Cancels a running job. Finished work is kept and charged.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/cancelJob/api.iml.json",
+                    "mappableParams": "modules/cancelJob/parameters.iml.json",
+                    "interface": "modules/cancelJob/interface.iml.json",
+                    "samples": "modules/cancelJob/samples.iml.json"
+                },
+                "actionCrud": "update"
+            },
+            "listJobs": {
+                "label": "List Jobs",
+                "description": "Lists your jobs, newest first.",
+                "moduleType": "search",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/listJobs/api.iml.json",
+                    "mappableParams": "modules/listJobs/parameters.iml.json",
+                    "interface": "modules/listJobs/interface.iml.json",
+                    "samples": "modules/listJobs/samples.iml.json"
+                }
+            },
+            "listResults": {
+                "label": "List Results of a Job",
+                "description": "Lists a finished job's results (one per input file).",
+                "moduleType": "search",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/listResults/api.iml.json",
+                    "mappableParams": "modules/listResults/parameters.iml.json",
+                    "interface": "modules/listResults/interface.iml.json",
+                    "samples": "modules/listResults/samples.iml.json"
+                }
+            },
+            "getResultContent": {
+                "label": "Get Result Content",
+                "description": "Reads a TXT or JSON result (up to 1 MiB) as data, for example extracted text or custom data fields.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/getResultContent/api.iml.json",
+                    "mappableParams": "modules/getResultContent/parameters.iml.json",
+                    "interface": "modules/getResultContent/interface.iml.json",
+                    "samples": "modules/getResultContent/samples.iml.json"
+                },
+                "actionCrud": "read"
+            },
+            "downloadResult": {
+                "label": "Download a Result",
+                "description": "Downloads a result file (DOCX, XLSX, PDF, EPUB, TXT, JSON).",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/downloadResult/api.iml.json",
+                    "mappableParams": "modules/downloadResult/parameters.iml.json",
+                    "interface": "modules/downloadResult/interface.iml.json",
+                    "samples": "modules/downloadResult/samples.iml.json"
+                },
+                "actionCrud": "read"
+            },
+            "watchFinishedJobs": {
+                "label": "Watch Finished Jobs",
+                "description": "Triggers when a job finishes (completed or partially completed by default).",
+                "moduleType": "trigger",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/watchFinishedJobs/api.iml.json",
+                    "mappableParams": "modules/watchFinishedJobs/parameters.iml.json",
+                    "interface": "modules/watchFinishedJobs/interface.iml.json",
+                    "samples": "modules/watchFinishedJobs/samples.iml.json"
+                }
+            },
+            "getAccount": {
+                "label": "Get Account",
+                "description": "Gets your plan and available pages.",
+                "moduleType": "action",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/getAccount/api.iml.json",
+                    "mappableParams": "modules/getAccount/parameters.iml.json",
+                    "interface": "modules/getAccount/interface.iml.json",
+                    "samples": "modules/getAccount/samples.iml.json"
+                },
+                "actionCrud": "read"
+            },
+            "makeApiCall": {
+                "label": "Make an API Call",
+                "description": "Performs an arbitrary authorized call to the ScribeTools API.",
+                "moduleType": "universal",
+                "connection": "scribetools",
+                "codeFiles": {
+                    "communication": "modules/makeApiCall/api.iml.json",
+                    "mappableParams": "modules/makeApiCall/parameters.iml.json",
+                    "interface": "modules/makeApiCall/interface.iml.json",
+                    "samples": "modules/makeApiCall/samples.iml.json"
+                }
+            }
+        },
+        "webhook": {},
+        "function": {
+            "outcomeOptions": {
+                "codeFiles": {
+                    "code": "functions/outcomeOptions/code.js",
+                    "test": "functions/outcomeOptions/test.js"
+                }
+            },
+            "extractionSchema": {
+                "codeFiles": {
+                    "code": "functions/extractionSchema/code.js",
+                    "test": "functions/extractionSchema/test.js"
+                }
+            }
+        }
+    },
+    "origins": []
+}

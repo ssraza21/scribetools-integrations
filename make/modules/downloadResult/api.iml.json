@@ -1,0 +1,26 @@
+[
+    {
+        "url": "/outcome-jobs/{{parameters.jobId}}/results/{{parameters.resultId}}/download",
+        "method": "GET",
+        "headers": {
+            "authorization": "Bearer {{connection.apiKey}}",
+            "x-scribetools-client": "make/1.0.0"
+        },
+        "response": {
+            "temp": {
+                "link": "{{body}}"
+            }
+        }
+    },
+    {
+        "url": "{{temp.link.url}}",
+        "method": "GET",
+        "response": {
+            "type": "binary",
+            "output": {
+                "fileName": "{{temp.link.filename}}",
+                "data": "{{body}}"
+            }
+        }
+    }
+]

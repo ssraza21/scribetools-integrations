@@ -1,0 +1,61 @@
+[
+    {
+        "url": "/upload-urls",
+        "method": "POST",
+        "headers": {
+            "authorization": "Bearer {{connection.apiKey}}",
+            "x-scribetools-client": "make/1.0.0"
+        },
+        "body": {
+            "file_infos": [
+                {
+                    "id": "f0",
+                    "filename": "{{parameters.fileName}}",
+                    "size_bytes": "{{length(parameters.data)}}"
+                }
+            ],
+            "idempotency_key": "{{temp.key}}"
+        },
+        "response": {
+            "temp": {
+                "upload": "{{body.urls[1]}}"
+            }
+        },
+        "temp": {
+            "key": "{{md5(parameters.fileName + ':' + length(parameters.data) + ':' + formatDate(now, 'x'))}}"
+        }
+    },
+    {
+        "url": "{{temp.upload.signed_url}}",
+        "method": "PUT",
+        "headers": {
+            "content-type": "{{temp.upload.mime_type}}"
+        },
+        "body": "{{parameters.data}}",
+        "type": "binary"
+    },
+    {
+        "url": "/outcome-jobs",
+        "method": "POST",
+        "headers": {
+            "authorization": "Bearer {{connection.apiKey}}",
+            "x-scribetools-client": "make/1.0.0"
+        },
+        "body": {
+            "outcome": "custom_data_extraction",
+            "gcs_uris": [
+                "{{temp.upload.gcs_uri}}"
+            ],
+            "idempotency_key": "{{temp.key}}",
+            "options": {
+                "output_schema": "{{extractionSchema(parameters.fields, parameters.schemaJson)}}",
+                "extraction_granularity": "{{ifempty(parameters.granularity, 'document')}}"
+            },
+            "name": "{{ifempty(parameters.jobName, undefined)}}",
+            "callback_url": "{{ifempty(parameters.callbackUrl, undefined)}}"
+        },
+        "response": {
+            "output": "{{body}}"
+        }
+    }
+]

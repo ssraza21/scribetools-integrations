@@ -1,0 +1,10 @@
+{
+	"node": "n8n-nodes-scribetools.scribeToolsTrigger",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Data & Storage", "Productivity", "Utility"],
+	"resources": {
+		"credentialDocumentation": [{ "url": "https://github.com/ssraza21/scribetools-integrations/tree/main/n8n#credentials" }],
+		"primaryDocumentation": [{ "url": "https://github.com/ssraza21/scribetools-integrations/tree/main/n8n" }]
+	}
+}

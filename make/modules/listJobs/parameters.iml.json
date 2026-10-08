@@ -1,0 +1,10 @@
+[
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "default": 10,
+        "required": true,
+        "help": "Maximum number of jobs to return."
+    }
+]

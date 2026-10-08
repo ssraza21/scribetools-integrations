@@ -1,0 +1,37 @@
+[
+    {
+        "name": "job_id",
+        "type": "text",
+        "label": "Job ID"
+    },
+    {
+        "name": "created",
+        "type": "boolean",
+        "label": "Created"
+    },
+    {
+        "name": "state",
+        "type": "text",
+        "label": "State"
+    },
+    {
+        "name": "outcome",
+        "type": "text",
+        "label": "Outcome"
+    },
+    {
+        "name": "format",
+        "type": "text",
+        "label": "Format"
+    },
+    {
+        "name": "credits_reserved",
+        "type": "number",
+        "label": "Pages held"
+    },
+    {
+        "name": "callback_secret",
+        "type": "text",
+        "label": "Callback secret"
+    }
+]

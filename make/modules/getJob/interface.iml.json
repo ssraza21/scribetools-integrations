@@ -1,0 +1,84 @@
+[
+    {
+        "name": "job_id",
+        "type": "text",
+        "label": "Job ID"
+    },
+    {
+        "name": "state",
+        "type": "text",
+        "label": "State"
+    },
+    {
+        "name": "outcome",
+        "type": "text",
+        "label": "Outcome"
+    },
+    {
+        "name": "format",
+        "type": "text",
+        "label": "Format"
+    },
+    {
+        "name": "name",
+        "type": "text",
+        "label": "Name"
+    },
+    {
+        "name": "credits_reserved",
+        "type": "number",
+        "label": "Pages held"
+    },
+    {
+        "name": "credits_charged",
+        "type": "number",
+        "label": "Pages charged"
+    },
+    {
+        "name": "created_at",
+        "type": "date",
+        "label": "Created at"
+    },
+    {
+        "name": "completed_at",
+        "type": "date",
+        "label": "Completed at"
+    },
+    {
+        "name": "progress",
+        "type": "collection",
+        "label": "Progress",
+        "spec": [
+            {
+                "name": "total",
+                "type": "number",
+                "label": "Total"
+            },
+            {
+                "name": "queued",
+                "type": "number",
+                "label": "Queued"
+            },
+            {
+                "name": "processing",
+                "type": "number",
+                "label": "Processing"
+            },
+            {
+                "name": "completed",
+                "type": "number",
+                "label": "Completed"
+            },
+            {
+                "name": "failed",
+                "type": "number",
+                "label": "Failed"
+            },
+            {
+                "name": "cancelled",
+                "type": "number",
+                "label": "Cancelled"
+            }
+        ]
+    }
+]

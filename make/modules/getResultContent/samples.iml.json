@@ -1,0 +1,10 @@
+{
+    "result_id": "7a6b5c4d-3e2f-4a1b-9c8d-7e6f5a4b3c2d",
+    "format": "json",
+    "size_bytes": 64,
+    "text": null,
+    "data": {
+        "invoice_number": "INV-1042",
+        "total": 1250.5
+    }
+}

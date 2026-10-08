@@ -1,0 +1,9 @@
+{
+    "email": "owner@example.com",
+    "plan": "Pro",
+    "pages": {
+        "available": 1200,
+        "reserved": 300,
+        "balance": 1500
+    }
+}

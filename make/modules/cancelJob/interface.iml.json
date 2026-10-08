@@ -1,0 +1,47 @@
+[
+    {
+        "name": "job_id",
+        "type": "text",
+        "label": "Job ID"
+    },
+    {
+        "name": "state",
+        "type": "text",
+        "label": "State"
+    },
+    {
+        "name": "outcome",
+        "type": "text",
+        "label": "Outcome"
+    },
+    {
+        "name": "format",
+        "type": "text",
+        "label": "Format"
+    },
+    {
+        "name": "name",
+        "type": "text",
+        "label": "Name"
+    },
+    {
+        "name": "credits_reserved",
+        "type": "number",
+        "label": "Pages held"
+    },
+    {
+        "name": "credits_charged",
+        "type": "number",
+        "label": "Pages charged"
+    },
+    {
+        "name": "created_at",
+        "type": "date",
+        "label": "Created at"
+    },
+    {
+        "name": "completed_at",
+        "type": "date",
+        "label": "Completed at"
+    }
+]

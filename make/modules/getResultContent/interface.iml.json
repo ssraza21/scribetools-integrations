@@ -1,0 +1,27 @@
+[
+    {
+        "name": "result_id",
+        "type": "text",
+        "label": "Result ID"
+    },
+    {
+        "name": "format",
+        "type": "text",
+        "label": "Format"
+    },
+    {
+        "name": "size_bytes",
+        "type": "number",
+        "label": "Size (bytes)"
+    },
+    {
+        "name": "text",
+        "type": "text",
+        "label": "Text"
+    },
+    {
+        "name": "data",
+        "type": "any",
+        "label": "Data"
+    }
+]

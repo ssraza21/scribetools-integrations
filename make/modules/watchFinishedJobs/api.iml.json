@@ -1,0 +1,26 @@
+{
+    "url": "/outcome-jobs",
+    "method": "GET",
+    "headers": {
+        "authorization": "Bearer {{connection.apiKey}}",
+        "x-scribetools-client": "make/1.0.0"
+    },
+    "qs": {
+        "page": 1,
+        "page_size": 50
+    },
+    "response": {
+        "iterate": {
+            "container": "{{body.jobs}}",
+            "condition": "{{item.completed_at and contains(ifempty(parameters.states, emptyarray), item.state)}}"
+        },
+        "trigger": {
+            "id": "{{item.job_id}}",
+            "date": "{{item.completed_at}}",
+            "type": "date",
+            "order": "desc"
+        },
+        "output": "{{item}}",
+        "limit": "{{parameters.limit}}"
+    }
+}

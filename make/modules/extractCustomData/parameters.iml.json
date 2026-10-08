@@ -1,0 +1,96 @@
+[
+    {
+        "name": "fileName",
+        "type": "filename",
+        "label": "File name",
+        "required": true,
+        "semantic": "file:name"
+    },
+    {
+        "name": "data",
+        "type": "buffer",
+        "label": "Data",
+        "required": true,
+        "semantic": "file:data"
+    },
+    {
+        "name": "fields",
+        "type": "array",
+        "label": "Fields to extract",
+        "spec": [
+            {
+                "name": "name",
+                "type": "text",
+                "label": "Field name",
+                "required": true
+            },
+            {
+                "name": "type",
+                "type": "select",
+                "label": "Type",
+                "default": "text",
+                "options": [
+                    {
+                        "label": "Text",
+                        "value": "text"
+                    },
+                    {
+                        "label": "Number",
+                        "value": "number"
+                    },
+                    {
+                        "label": "Whole number",
+                        "value": "integer"
+                    },
+                    {
+                        "label": "Date",
+                        "value": "date"
+                    },
+                    {
+                        "label": "Yes/No",
+                        "value": "boolean"
+                    }
+                ]
+            },
+            {
+                "name": "instructions",
+                "type": "text",
+                "label": "Instructions"
+            }
+        ]
+    },
+    {
+        "name": "schemaJson",
+        "type": "text",
+        "label": "JSON Schema (advanced)",
+        "help": "Optional. Used instead of the fields above."
+    },
+    {
+        "name": "granularity",
+        "type": "select",
+        "label": "Results",
+        "default": "document",
+        "options": [
+            {
+                "label": "One result for the whole document",
+                "value": "document"
+            },
+            {
+                "label": "One result per page",
+                "value": "page"
+            }
+        ]
+    },
+    {
+        "name": "jobName",
+        "type": "text",
+        "label": "Job name",
+        "help": "Shown in your ScribeTools jobs."
+    },
+    {
+        "name": "callbackUrl",
+        "type": "url",
+        "label": "Callback URL",
+        "help": "Optional public https URL (for example a Make webhook) that ScribeTools calls once when the job finishes. Use it to continue a long job in another scenario."
+    }
+]

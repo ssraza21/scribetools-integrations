@@ -1,0 +1,33 @@
+[
+    {
+        "label": "Documents",
+        "modules": [
+            "processDocument",
+            "extractCustomData"
+        ]
+    },
+    {
+        "label": "Jobs",
+        "modules": [
+            "watchFinishedJobs",
+            "getJob",
+            "listJobs",
+            "cancelJob"
+        ]
+    },
+    {
+        "label": "Results",
+        "modules": [
+            "listResults",
+            "getResultContent",
+            "downloadResult"
+        ]
+    },
+    {
+        "label": "Other",
+        "modules": [
+            "getAccount",
+            "makeApiCall"
+        ]
+    }
+]

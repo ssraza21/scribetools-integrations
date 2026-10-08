@@ -1,0 +1,11 @@
+{
+    "url": "/outcome-jobs/{{parameters.jobId}}/results/{{parameters.resultId}}/content",
+    "method": "GET",
+    "headers": {
+        "authorization": "Bearer {{connection.apiKey}}",
+        "x-scribetools-client": "make/1.0.0"
+    },
+    "response": {
+        "output": "{{body}}"
+    }
+}

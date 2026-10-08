@@ -1,0 +1,15 @@
+[
+    {
+        "name": "jobId",
+        "type": "text",
+        "label": "Job ID",
+        "required": true
+    },
+    {
+        "name": "limit",
+        "type": "uinteger",
+        "label": "Limit",
+        "default": 50,
+        "required": true
+    }
+]

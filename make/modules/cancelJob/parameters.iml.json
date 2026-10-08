@@ -1,0 +1,8 @@
+[
+    {
+        "name": "jobId",
+        "type": "text",
+        "label": "Job ID",
+        "required": true
+    }
+]

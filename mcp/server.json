@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.scribetools/scribetools",
+  "title": "ScribeTools",
+  "description": "OCR, editable Word, tables, translation and data extraction for Arabic-script documents",
+  "version": "1.0.0",
+  "websiteUrl": "https://scribetools.com/integrations",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.scribetools.com/mcp"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+    "url": "/me",
+    "method": "GET",
+    "headers": {
+        "authorization": "Bearer {{connection.apiKey}}",
+        "x-scribetools-client": "make/1.0.0"
+    },
+    "response": {
+        "output": "{{body}}"
+    }
+}

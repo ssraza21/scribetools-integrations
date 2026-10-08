@@ -1,0 +1,21 @@
+{
+    "url": "https://api.scribetools.com/api/v1/me",
+    "headers": {
+        "authorization": "Bearer {{parameters.apiKey}}",
+        "x-scribetools-client": "make/1.0.0"
+    },
+    "response": {
+        "metadata": {
+            "type": "email",
+            "value": "{{body.email}}"
+        },
+        "error": {
+            "message": "[{{statusCode}}] {{ifempty(body.detail.message, 'Could not verify the API key')}}"
+        }
+    },
+    "log": {
+        "sanitize": [
+            "request.headers.authorization"
+        ]
+    }
+}

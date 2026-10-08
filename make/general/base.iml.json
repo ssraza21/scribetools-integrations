@@ -1,0 +1,14 @@
+{
+    "baseUrl": "https://api.scribetools.com/api/v1",
+    "response": {
+        "error": {
+            "type": "RuntimeError",
+            "message": "[{{statusCode}}] {{ifempty(body.detail.message, 'ScribeTools request failed')}}{{if(body.detail.code, ' (' + body.detail.code + ')', '')}}"
+        }
+    },
+    "log": {
+        "sanitize": [
+            "request.headers.authorization"
+        ]
+    }
+}

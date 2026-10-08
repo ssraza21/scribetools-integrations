@@ -1,0 +1,23 @@
+{
+    "url": "/outcome-jobs",
+    "method": "GET",
+    "headers": {
+        "authorization": "Bearer {{connection.apiKey}}",
+        "x-scribetools-client": "make/1.0.0"
+    },
+    "qs": {
+        "page": "{{pagination.page}}",
+        "page_size": 50
+    },
+    "response": {
+        "iterate": "{{body.jobs}}",
+        "output": "{{item}}",
+        "limit": "{{parameters.limit}}"
+    },
+    "pagination": {
+        "qs": {
+            "page": "{{pagination.page + 1}}"
+        },
+        "condition": "{{length(body.jobs) = 50}}"
+    }
+}
