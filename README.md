@@ -5,7 +5,7 @@ custom data extraction for Arabic-script and multilingual PDFs and images.
 
 | Folder | What | Status |
 |---|---|---|
-| [`n8n/`](n8n) | `n8n-nodes-scribetools` community node (action + trigger) | Ready to publish to npm, then submit for verification |
+| [n8n-nodes-scribetools](https://github.com/ssraza21/n8n-nodes-scribetools) (own repo) | n8n community node (action + trigger), on npm | Submitted for n8n verification |
 | [`zapier/`](zapier) | Zapier app (Zapier Platform CLI) | Ready for `zapier push` |
 | [`make/`](make) | Make custom app (local development format) | Ready to deploy with the Make Apps VS Code extension |
 | [`mcp/`](mcp) | MCP Registry entry for `https://mcp.scribetools.com/mcp` | Ready for `mcp-publisher publish` |
@@ -31,9 +31,7 @@ Full reference: [API.md](API.md) (machine-readable: [openapi.json](openapi.json)
 ## Tests
 
 ```bash
-node --test tests/n8n-helpers.test.ts      # n8n helpers
 (cd zapier && npm ci && npm test && npx zapier-platform validate)
-(cd n8n && npm ci --ignore-scripts && npx n8n-node lint && npx n8n-node build)
 ```
 
 MIT licensed.
